@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
             } else {
               res.status(200).json({
                 userId: user._id,
-                toen: jwt.sign(
+                token: jwt.sign(
                   //payload = les données que l'on veut encoder dans un TOKEN
                   { userId: user._id },
                   "RANDOM_TOKEN_SECRET",

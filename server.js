@@ -1,5 +1,5 @@
 // On importe le package HTTP de Node qui permet de créer un serveur + app.js
-const https = require("https");
+const http = require("http");
 const app = require ("./app");
 
 // Renvoie un port valide qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
@@ -41,7 +41,7 @@ const errorHandler = error => {
   }
 };
 // On créé une nouvelle constante dans laquelle on appelle la fonction qui sera appelée à chaque requête serveur
-const server = https.createServer(app);
+const server = http.createServer(app);
 
 server.on('error', errorHandler);
 server.on('listening', () => {
