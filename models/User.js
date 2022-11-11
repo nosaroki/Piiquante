@@ -1,4 +1,4 @@
-// On importe mongoose + mongoose uv
+// On importe les packages
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 

@@ -1,8 +1,10 @@
 // On créé les middlewares d'authentification
 
+// On importe les packages
 const bcrypt = require("bcrypt");
-const User = require("../models/User"); // On importe le modèle
 const jwt = require("jsonwebtoken");
+// On importe le modèle
+const User = require("../models/User"); 
 
 // Pour l'enregistrement de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
@@ -11,11 +13,10 @@ exports.signup = (req, res, next) => {
       const user = new User({
         // On enregistre le hash du mdp dans un nv user qu'on save dans la BDD
         email: req.body.email,
-        password: hash,
+        password: hash
       });
       console.log(user);
-      user
-        .save()
+      user.save()
         .then(() => res.status(201).json({message: "Utilisateur créé !"}))
         .catch((error) => {
           console.log(error);
@@ -52,7 +53,7 @@ exports.login = (req, res, next) => {
                 token: jwt.sign(
                   //payload = les données que l'on veut encoder dans un TOKEN
                   { userId: user._id },
-                  "RANDOM_TOKEN_SECRET",
+                  process.env.SECRET_TOKEN,
                   { expiresIn: "24h" }
                 ),
               });
