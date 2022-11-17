@@ -8,6 +8,7 @@ const User = require("../models/User");
 
 // Pour l'enregistrement de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
+  console.log("coucou");
   bcrypt.hash(req.body.password, 10) // On hash le mdp avec une fonction asynchrone
     .then((hash) => {
       const user = new User({
@@ -17,7 +18,9 @@ exports.signup = (req, res, next) => {
       });
       console.log(user);
       user.save()
-        .then(() => res.status(201).json({message: "Utilisateur créé !"}))
+        .then(() => 
+        { console.log("test");
+          res.status(201).json({message: "Utilisateur créé !"})})
         .catch((error) => {
           console.log(error);
           res.status(400).json({ error });

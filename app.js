@@ -23,23 +23,21 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res) => {
-    res.json({message: "Votre requête a bien été reçue !"});
-})
 
 
-app.use("/api/sauce", (req, res, next) => {
-  delete req.body._id;
-  const sauce = new Sauce ({
-    ...req.body
-  });
-  sauce.save()
-  .then(() => res.status(201).json({message: "Sauce créée !"}))
-  .catch(error => {
-    console.log(error);
-    res.status(400).json({error});
-  });
-})
+
+// app.use("/api/sauce", (req, res, next) => {
+//   delete req.body._id;
+//   const sauce = new Sauce ({
+//     ...req.body
+//   });
+//   sauce.save()
+//   .then(() => res.status(201).json({message: "Sauce créée !"}))
+//   .catch(error => {
+//     console.log(error);
+//     res.status(400).json({error});
+//   });
+// })
 
 app.use(bodyParser.json());
 app.use("/api/auth", userRoutes);
