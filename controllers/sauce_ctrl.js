@@ -1,4 +1,4 @@
-// On importe les packages
+// importing the packages
 const Sauce = require("../models/sauce");
 const fs = require("fs");
 
@@ -6,7 +6,7 @@ const fs = require("fs");
 exports.getAllSauce = (req, res, next) => {
     console.log("coucou");
   Sauce.find()
-    .then((sauces) => res.status(200).json({ sauces }))
+    .then((sauces) => res.status(200).json(sauces))
     .catch((error) => {
       console.log(error);
       res.status(400).json({ error });
@@ -14,9 +14,13 @@ exports.getAllSauce = (req, res, next) => {
 };
 
 // On renvoie une seule sauce en check son id
-exports.getOneSauce = (req, res, next) => {
+exports.getOneSauce =  (req, res, next) => {
+    console.log("heyyyyy");
   Sauce.findOne({ _id: req.params.id }) // ":" pour rendre la route accessible en tant que paramètre
-    .then((sauce) => res.status(200).json({ sauce }))
+    .then((sauce) => 
+    {
+        console.log(sauce);
+        res.status(200).json(sauce)})
     .catch((error) => {
       console.log(error);
       res.status(404).json({ error });
@@ -32,8 +36,10 @@ exports.createSauce = (req, res, next) => {
       // on créé notre objet
       ...sauceObject,
       userId: req.auth.userId,
-      imageUrl:
-        '${req.protocol}://${req.get("host")}/images/${req.file.filename}',
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    //   likes: 0,
+    //   dislikes: 0,
+
     });
     sauce
       .save()
@@ -49,7 +55,7 @@ exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file? {
         // on check s'il y a un champ file
         ...JSON.parse(req.body.sauce), // si oui on récup l'objet et son image
-        imageUrl: '${req.protocol}://${req.get("host")}/images/${req.file.filename}',
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
       }
     : { ...req.body }; // si ce n'est pas le cas on récupère l'objet directement dans le corps de la requête
 
@@ -104,5 +110,7 @@ exports.deleteSauce = (req, res, next) => {
 
 // On créé une route pour le like ou dislike
 exports.likeOrDislike = (req, res) => {
-
+    // const stateLike = req.params.like;
+    // const idUserLike = req.params.userId;
+    // const idSauceLike = req.params.id;
 };
