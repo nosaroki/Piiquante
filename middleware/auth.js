@@ -1,9 +1,11 @@
 // On importe jwt
 const jwt = require("jsonwebtoken");
 
+// On appel .env pour utiliser les variables d'environnement
+require("dotenv").config();
+
 module.exports = (req, res, next) => {
     try {
-        console.log("hello");
         const token = req.headers.authorization.split(" ")[1]; // On récupère le token
         const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
         const userId = decodedToken.userId;

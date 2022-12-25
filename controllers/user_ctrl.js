@@ -3,12 +3,35 @@
 // On importe les packages
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+var passwordValidator = require('password-validator');
+var validator = require("email-validator");
 // On importe le modèle
 const User = require("../models/User"); 
 
 // Pour l'enregistrement de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
-  console.log("coucou");
+
+// Create a schema
+var schema = new passwordValidator();
+
+// Add properties to it
+schema
+.is().min(8)                                    // Minimum length 8
+.is().max(100)                                  // Maximum length 100
+.has().uppercase()                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(2)                                // Must have at least 2 digits
+.has().not().spaces()                           // Should not have spaces
+.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+
+// Validate against a password string
+if (!schema.validate(req.body.password)){
+  res.status(400).json({message: "Veuillez choisir un mot de passe avec 8 caractères minimum, 1 majuscule, 1 minuscule, 2 chiffres et sans espace."});
+};
+ 
+if (!validator.validate(req.body.email)) {
+  res.status(400).json({message: "Votre adresse email n'est pas au bon format."});
+};
   bcrypt.hash(req.body.password, 10) // On hash le mdp avec une fonction asynchrone
     .then((hash) => {
       const user = new User({
