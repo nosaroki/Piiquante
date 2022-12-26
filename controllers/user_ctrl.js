@@ -3,8 +3,8 @@
 // On importe les packages
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-var passwordValidator = require('password-validator');
-var validator = require("email-validator");
+const passwordValidator = require('password-validator');
+const validator = require("email-validator");
 // On importe le modèle
 const User = require("../models/User"); 
 
@@ -12,7 +12,7 @@ const User = require("../models/User");
 exports.signup = (req, res, next) => {
 
 // Create a schema
-var schema = new passwordValidator();
+const schema = new passwordValidator();
 
 // Add properties to it
 schema

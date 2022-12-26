@@ -59,7 +59,7 @@ exports.modifySauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }) // On cherche l'objet dans la BDD pour voir s'il appartient à son créateur
     .then(sauce => {
       if (sauce.userId != req.auth.userId) { // on check si le userId enregistré en bdd correspond à celui qu'on recup du TOKEN
-        res.status(401).json({ message: "Non-autorisé" });
+        res.status(403).json({ message: "Requête non-autorisé" });
         return false;
       } else {
         console.log("oui")
@@ -112,10 +112,10 @@ exports.deleteSauce = (req, res, next) => {
 // On créé une route pour le like ou dislike
 exports.likeOrDislike = (req, res) => {
   Sauce.findOne({ _id: req.params.id }) // ":" pour rendre la route accessible en tant que paramètre
-  .then((sauce) => 
-  {
+  // .then((sauce) => 
+  // {
     
-  })
+  // })
     .then(sauce => {
       switch (req.body.like) {
         case -1:
@@ -166,3 +166,17 @@ exports.likeOrDislike = (req, res) => {
     })
     .catch(error => res.status(401).json({ error }));
 };
+
+
+
+
+/*
+200 : OK
+201 : Created
+204 : No Content (delete)
+400 : Bad Request
+401 : Unauthorized
+403 : Forbidden
+404 : Not Found
+409 : Conflict
+*/
