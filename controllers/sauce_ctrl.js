@@ -4,7 +4,6 @@ const fs = require("fs");
 
 // On renvoie le tableau contenant toutes les sauces de notre bdd
 exports.getAllSauce = (req, res, next) => {
-    console.log("coucou");
   Sauce.find()
     .then((sauces) => res.status(200).json(sauces))
     .catch((error) => {
@@ -64,8 +63,8 @@ exports.modifySauce = (req, res, next) => {
       } else {
         console.log("oui")
         const filename = sauce.imageUrl.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
-        Sauce.updateOne(
+        fs.unlink(`images/${filename}`, () => { // Permet de supprimer l'image modifiée
+        Sauce.updateOne( // updateOne permet la màj (modif) des ressources
             { _id: req.params.id },
             { ...sauceObject, _id: req.params.id }
           )
@@ -92,8 +91,8 @@ exports.deleteSauce = (req, res, next) => {
           return false;
       }
       else { // si c'est le bon user faut supprimer la sauce ET l'image de la bdd
-        const filename = sauce.imageUrl.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
+        const filename = sauce.imageUrl.split("/images/")[1]; // On récupère le nom de la photo à suppr
+        fs.unlink(`images/${filename}`, () => { // On suppr l'image en question
          Sauce.deleteOne({_id: req.params.id})
             .then(() => res.status(200).json({message: "Sauce supprimée !"}))
             .catch(error => {

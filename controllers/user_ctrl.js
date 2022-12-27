@@ -11,18 +11,18 @@ const User = require("../models/User");
 // Pour l'enregistrement de nouveaux utilisateurs
 exports.signup = (req, res, next) => {
 
-// Create a schema
+// On créé un schema
 const schema = new passwordValidator();
 
-// Add properties to it
+// On y ajoute des propriétés
 schema
-.is().min(8)                                    // Minimum length 8
-.is().max(100)                                  // Maximum length 100
-.has().uppercase()                              // Must have uppercase letters
-.has().lowercase()                              // Must have lowercase letters
-.has().digits(2)                                // Must have at least 2 digits
-.has().not().spaces()                           // Should not have spaces
-.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+.is().min(8)                                    // Minimum longueur 8
+.is().max(100)                                  // Maximum longueur 100
+.has().uppercase()                              // Doit contenir au moins des minuscules
+.has().lowercase()                              // Doit contenir au moins des majuscules
+.has().digits(2)                                // Doit contenir au moins au moins 2 chiffres
+.has().not().spaces()                           // Ne doit pas contenur d'espace
+.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist ces valeurs
 
 // Validate against a password string
 if (!schema.validate(req.body.password)){

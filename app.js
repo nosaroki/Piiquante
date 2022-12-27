@@ -1,7 +1,7 @@
 // On importe les packages
 const express = require("express"); // pour créer une application express
 const mongoose = require("mongoose"); // permet d'utiliser des fonctions complètes pour intéragir avec la bdd
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser'); // permet d'analyser JSON, du texte brut ou de renvoyer un objet
 const path = require("path"); // permet de connaitre le chemin du système de fichier
 const helmet = require("helmet"); // aide à sécuriser l'application Express en définissant divers en-têtes HTTP
 const cors = require("cors");
@@ -32,11 +32,10 @@ app.use((req, res, next) => {
 });
 
 
-
-app.use(bodyParser.json());
-app.use("/api/auth", userRoutes);
-app.use("/api/sauces", sauceRoutes);
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(bodyParser.json()); // Transformer le JSON en JS utilisable
+app.use("/api/auth", userRoutes); // Route d'authentification
+app.use("/api/sauces", sauceRoutes); // Route sauces
+app.use("/images", express.static(path.join(__dirname, "images"))); // pour accéder aux images du dossier
 
 // On exporte l'app pour y accéder depuis les autres fichiers dont server node
 module.exports = app;

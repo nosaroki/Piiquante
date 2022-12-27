@@ -4,10 +4,10 @@ const router = express.Router();
 
 const sauceCtrl = require("../controllers/sauce_ctrl");
 const auth = require ("../middleware/auth");
-const multer = require("../middleware/multer-config");
+const multer = require("../middleware/multer-config"); // Pour télécharger des fichiers
 
 // CRUD
-
+// On applique le middleware auth sur toutes les routes à protéger
 router.get("/", auth, sauceCtrl.getAllSauce);
 router.get("/:id", auth, sauceCtrl.getOneSauce);
 router.post("/", auth, multer, sauceCtrl.createSauce);
