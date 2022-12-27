@@ -1,6 +1,6 @@
 // On importe les packages
 const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator"); // Pour que 2 utilisateurs ne puissent pas utiliser la même adresse email
+const uniqueValidator = require("mongoose-unique-validator"); 
 
 // On créé notre schéma utilisateur
 const userSchema = mongoose.Schema({

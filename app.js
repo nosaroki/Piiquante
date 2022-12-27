@@ -11,7 +11,7 @@ const sauceRoutes = require("./routes/sauce_route");
 
 const app = express(); // === on créé une application express
 require('dotenv').config(); // on appel .env pour utiliser les variables d'environnement
-app.use(helmet()); // on utilise les services des middlewares proposés par helmet
+app.use(helmet());
 app.use(cors());
 
 
@@ -24,9 +24,9 @@ mongoose.connect(process.env.MONGO_ACCESS,
 
 // Middleware Header pour la sécurité CORS
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Autorise l'accès à l'API pour n'importe quelle origine
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'); // Définit les Headers utilisés par l'API
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); // Définit les méthodes possibles à utiliser
   res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
   next();
 });
