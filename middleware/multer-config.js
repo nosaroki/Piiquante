@@ -6,19 +6,17 @@ const authorizedExtensions = ["apng", "avif", "gif", "jpg", "jpeg", "jfif", "pjp
 const removingExtensionFromName = (name, extension) => name.replace("." + extension, "");
 
 const storage = multer.diskStorage({ // "diskStorage" configure le chemin et le nom de fichier pour les fichiers entrants.
-    destination: (req, file, callback) => { // Indique à multer d'enregistrer les fichiers dans le dossier images
+    destination: (req, file, callback) => {
         callback(null, "images");
     },
     filename: (req, file, callback) => { // Indique à multer d'utiliser le nom d'origine, de remplacer les espaces par des "_" 
         const name = file.originalname.split(' ').join('_');
-        const extension = file.mimetype.replace("image/", ""); // On utiliser mimetype pour résoudre l'extension de fichier appropriée
-        // On vérifie si l'extension de fichier est dans la liste des ext autorisées
+        const extension = file.mimetype.replace("image/", "");
         if (authorizedExtensions.find((ext) => ext === extension)) {
             const formattedName = removingExtensionFromName(name, extension);
             const fileName = formattedName + Date.now() + "." + extension;
-            callback(null, fileName); // On ajoute un timestamp comme nom de fichier
+            callback(null, fileName);
         } 
-        //Si ce n'est pas le cas on renvoie une erreur 415
         else {
         callback(`Erreur 415: "${extension}" n'est pas le bon format de fichier. Les formats autorisés sont : ` + JSON.stringify(authorizedExtensions));
         return

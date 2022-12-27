@@ -13,7 +13,7 @@ schema
 .is().not().oneOf(['Passw0rd', 'Password123']); 
 
 module.exports = (req, res, next) => {
-// Phrase d'erreur en cas de non conformité
+
 if (!schema.validate(req.body.password)){
   res.status(400).json({message: "Veuillez choisir un mot de passe avec 8 caractères minimum, 1 majuscule, 1 minuscule, 2 chiffres et sans espace."});
 }
